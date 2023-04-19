@@ -12,10 +12,9 @@
 
 #### 安装教程
 
-1.  下载zip
-2.  全局安装yarn
-3.  yarn install
-4.  yarn serve
+1.  安装MySQL
+2.  新建数据库mall
+3.  运行SpringBootShiroApplication.java
 
 
 
