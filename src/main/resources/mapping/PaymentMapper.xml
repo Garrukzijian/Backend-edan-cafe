@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whut.springbootshiro.mapper.PaymentMapper" >
+  <resultMap id="BaseResultMap" type="com.whut.springbootshiro.model.Payment" >
+    <id column="payment_id" property="paymentId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="parment_date" property="parmentDate" jdbcType="DATE" />
+    <result column="discount" property="discount" jdbcType="INTEGER" />
+    <result column="grand_total" property="grandTotal" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    payment_id, order_id, parment_date, discount, grand_total
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from payment
+    where payment_id = #{paymentId,jdbcType=INTEGER}
+  </select>
+  <select id="getMaxIntId" resultType="java.lang.Integer">
+    select Max(payment_id) from payment
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from payment
+    where payment_id = #{paymentId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.whut.springbootshiro.model.Payment" >
+    insert into payment (payment_id, order_id, parment_date, 
+      discount, grand_total)
+    values (#{paymentId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{parmentDate,jdbcType=DATE}, 
+      #{discount,jdbcType=INTEGER}, #{grandTotal,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whut.springbootshiro.model.Payment" >
+    insert into payment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="paymentId != null" >
+        payment_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="parmentDate != null" >
+        parment_date,
+      </if>
+      <if test="discount != null" >
+        discount,
+      </if>
+      <if test="grandTotal != null" >
+        grand_total,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="paymentId != null" >
+        #{paymentId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="parmentDate != null" >
+        #{parmentDate,jdbcType=DATE},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=INTEGER},
+      </if>
+      <if test="grandTotal != null" >
+        #{grandTotal,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whut.springbootshiro.model.Payment" >
+    update payment
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="parmentDate != null" >
+        parment_date = #{parmentDate,jdbcType=DATE},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=INTEGER},
+      </if>
+      <if test="grandTotal != null" >
+        grand_total = #{grandTotal,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where payment_id = #{paymentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whut.springbootshiro.model.Payment" >
+    update payment
+    set order_id = #{orderId,jdbcType=INTEGER},
+      parment_date = #{parmentDate,jdbcType=DATE},
+      discount = #{discount,jdbcType=INTEGER},
+      grand_total = #{grandTotal,jdbcType=DECIMAL}
+    where payment_id = #{paymentId,jdbcType=INTEGER}
+  </update>
+</mapper>

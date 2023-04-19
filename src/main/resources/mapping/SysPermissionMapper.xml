@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whut.springbootshiro.mapper.SysPermissionMapper">
+    <resultMap id="BaseResultMap" type="com.whut.springbootshiro.model.SysPermission">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="href" jdbcType="VARCHAR" property="href"/>
+        <result column="spread" jdbcType="BIT" property="spread"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="tag" jdbcType="VARCHAR" property="tag"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
+    </resultMap>
+    <resultMap id="BaseResultMapVo" type="com.whut.springbootshiro.vo.SysPermissionMenuVo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="href" jdbcType="VARCHAR" property="href"/>
+        <result column="spread" jdbcType="BIT" property="spread"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="tag" jdbcType="VARCHAR" property="tag"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
+    </resultMap>
+
+
+
+
+
+
+
+
+
+    <sql id="Base_Column_List">
+    id, title, icon, href, spread, type, tag, sort, parent_id
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_permission
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_permission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="insert" parameterType="com.whut.springbootshiro.model.SysPermission">
+    insert into sys_permission (id, title, icon, 
+      href, spread, type, tag, 
+      sort, parent_id)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, 
+      #{href,jdbcType=VARCHAR}, #{spread,jdbcType=BIT}, #{type,jdbcType=INTEGER}, #{tag,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="com.whut.springbootshiro.model.SysPermission">
+        insert into sys_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+            <if test="href != null">
+                href,
+            </if>
+            <if test="spread != null">
+                spread,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="tag != null">
+                tag,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="href != null">
+                #{href,jdbcType=VARCHAR},
+            </if>
+            <if test="spread != null">
+                #{spread,jdbcType=BIT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="tag != null">
+                #{tag,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.whut.springbootshiro.model.SysPermission">
+        update sys_permission
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="href != null">
+                href = #{href,jdbcType=VARCHAR},
+            </if>
+            <if test="spread != null">
+                spread = #{spread,jdbcType=BIT},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="tag != null">
+                tag = #{tag,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.whut.springbootshiro.model.SysPermission">
+    update sys_permission
+    set title = #{title,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      href = #{href,jdbcType=VARCHAR},
+      spread = #{spread,jdbcType=BIT},
+      type = #{type,jdbcType=INTEGER},
+      tag = #{tag,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+    <select id="selectLeftMenuByUserId" resultMap="BaseResultMapVo">
+        select distinct
+        <include refid="Base_Column_List"/>
+        from sys_permission sp ,sys_role_per_rel srpr ,sys_user_role_rel surr
+        where sp.id = srpr.per_id
+        and srpr.role_id = surr.role_id
+        and surr.user_id = #{userId}
+        <if test="type!=null">
+            and sp.type = #{type}
+        </if>
+        <if test="parentId!=null">
+            and sp.parent_id = #{parentId}
+        </if>
+
+        order by sp.sort desc
+    </select>
+    <select id="selectList" resultMap="BaseResultMapVo">
+        select distinct
+        <include refid="Base_Column_List"/>
+        from sys_permission
+        <where>
+            <if test="title!=null and title!=''">
+                title like concat('%',#{title},'%')
+            </if>
+        </where>
+        order by sort desc
+    </select>
+    <select id="selectAllChildId" resultType="java.lang.Integer">
+        select id from sys_permission where parent_id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+
+
+    <insert id="insertForm" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into sys_permission (title, icon,
+          href, spread, type, tag,
+          sort, parent_id)
+          value (
+          #{title},
+          #{icon},
+          #{href},
+          #{spread},
+          #{type},
+          #{tag},
+          #{sort},
+          #{parentId}
+          )
+    </insert>
+
+
+    <delete id="batchDeleteIds">
+        delete from sys_permission
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="batchDeletePermIds">
+        delete from sys_role_per_rel
+        where per_id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>

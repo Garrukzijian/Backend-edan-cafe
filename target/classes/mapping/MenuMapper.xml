@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whut.springbootshiro.mapper.MenuMapper" >
+  <resultMap id="BaseResultMap" type="com.whut.springbootshiro.model.Menu" >
+    <id column="menu_id" property="menuId" jdbcType="INTEGER" />
+    <result column="menu_chiname" property="menuChiname" jdbcType="CHAR" />
+    <result column="menu_engname" property="menuEngname" jdbcType="CHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="picture" property="picture" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    menu_id, menu_chiname, menu_engname, description, price, picture
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from menu
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </select>
+  <select id="getMaxIntId" resultType="java.lang.Integer">
+    SELECT MAX(menu_id) FROM menu;
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from menu
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.whut.springbootshiro.model.Menu" >
+    insert into menu (menu_id, menu_chiname, menu_engname, 
+      description, price, picture
+      )
+    values (#{menuId,jdbcType=INTEGER}, #{menuChiname,jdbcType=CHAR}, #{menuEngname,jdbcType=CHAR}, 
+      #{description,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{picture,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.whut.springbootshiro.model.Menu" >
+    insert into menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        menu_id,
+      </if>
+      <if test="menuChiname != null" >
+        menu_chiname,
+      </if>
+      <if test="menuEngname != null" >
+        menu_engname,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="picture != null" >
+        picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="menuChiname != null" >
+        #{menuChiname,jdbcType=CHAR},
+      </if>
+      <if test="menuEngname != null" >
+        #{menuEngname,jdbcType=CHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="picture != null" >
+        #{picture,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whut.springbootshiro.model.Menu" >
+    update menu
+    <set >
+      <if test="menuChiname != null" >
+        menu_chiname = #{menuChiname,jdbcType=CHAR},
+      </if>
+      <if test="menuEngname != null" >
+        menu_engname = #{menuEngname,jdbcType=CHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="picture != null" >
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whut.springbootshiro.model.Menu" >
+    update menu
+    set menu_chiname = #{menuChiname,jdbcType=CHAR},
+      menu_engname = #{menuEngname,jdbcType=CHAR},
+      description = #{description,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      picture = #{picture,jdbcType=VARCHAR}
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </update>
+</mapper>
